@@ -1,22 +1,26 @@
-const canvas = document.querySelector('#js-canvas');
-const context = canvas.getContext('2d');
-const colors = [...document.querySelectorAll('.js-control-color')];
-const widthRange = document.querySelector('#js-range');
-const mode = document.querySelector('#js-mode');
-const saveBtn = document.querySelector('#js-save');
+const canvas: HTMLCanvasElement = document.querySelector('#js-canvas');
+const context: CanvasRenderingContext2D = canvas.getContext('2d');
+const colors: Element[] = [...document.querySelectorAll('.js-control-color')];
+const widthRange: HTMLInputElement = document.querySelector('#js-range');
+const mode: HTMLButtonElement = document.querySelector('#js-mode');
+const saveBtn: HTMLButtonElement = document.querySelector('#js-save');
+
 let painting = false;
 let filling = false;
+
 canvas.width = 600;
 canvas.height = 600;
-canvas.draggable = true;
+
 context.strokeStyle = 'black';
 context.lineWidth = 2.5;
+
 function draw(event) {
   if (filling) {
-    canvas.style.backgroundColor = context.strokeStyle;
+    canvas.style.backgroundColor = <string>context.strokeStyle;
   } else {
     const x = event.offsetX;
     const y = event.offsetY;
+
     painting = true;
     context.beginPath();
     context.moveTo(x, y);
@@ -24,9 +28,11 @@ function draw(event) {
     context.stroke();
   }
 }
+
 function onMouseMove(event) {
   const x = event.offsetX;
   const y = event.offsetY;
+
   if (!painting) {
     context.beginPath();
     context.moveTo(x, y);
@@ -35,13 +41,16 @@ function onMouseMove(event) {
     context.stroke();
   }
 }
+
 function stopDraw(event) {
   painting = false;
 }
+
 if (context) {
   context.fillStyle = 'white';
   context.fillRect(0, 0, 600, 600);
 }
+
 if (canvas) {
   canvas.addEventListener('mousemove', onMouseMove);
   canvas.addEventListener('mousedown', draw);
@@ -51,18 +60,21 @@ if (canvas) {
     event.preventDefault();
   });
 }
+
 if (colors) {
   colors.forEach((color) =>
     color.addEventListener('click', (e) => {
-      context.strokeStyle = e.target.style.backgroundColor;
+      context.strokeStyle = (e.target as HTMLDivElement).style.backgroundColor;
     })
   );
 }
+
 if (widthRange) {
   widthRange.addEventListener('input', (e) => {
-    context.lineWidth = parseFloat(e.target.value);
+    context.lineWidth = parseFloat((<HTMLInputElement>e.target).value);
   });
 }
+
 if (mode) {
   mode.addEventListener('click', () => {
     if (filling === true) mode.innerText = 'Fill';
@@ -70,10 +82,11 @@ if (mode) {
     filling = !filling;
   });
 }
+
 if (saveBtn) {
   saveBtn.addEventListener('click', () => {
-    const img = canvas.toDataURL('image/jpeg');
-    const link = document.createElement('a');
+    const img: string = canvas.toDataURL('image/jpeg');
+    const link: HTMLAnchorElement = document.createElement('a');
     link.href = img;
     link.download = 'paintJSHaha.jpeg';
   });

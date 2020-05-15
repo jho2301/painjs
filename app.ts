@@ -5,8 +5,8 @@ const widthRange: HTMLInputElement = document.querySelector('#js-range');
 const mode: HTMLButtonElement = document.querySelector('#js-mode');
 const saveBtn: HTMLButtonElement = document.querySelector('#js-save');
 
-let painting = false;
-let filling = false;
+let painting: boolean = false;
+let filling: boolean = false;
 
 canvas.width = 600;
 canvas.height = 600;

@@ -4,6 +4,6 @@ Painting Board made with Vanillats
 
 before you run, install typescript and follow the following script
 ```shell
-tsc app.ts
+$ tsc app.ts
 ```
 
